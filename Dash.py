@@ -3,7 +3,7 @@
 import streamlit as st
 import pandas as pd
 
-st.set_page_config("臺灣金融業資訊分析")
+st.set_page_config(page_title="臺灣金融業資訊分析")
 st.title("臺灣金融業資訊分析")
 st.write("Dashboard")
 
