@@ -7,3 +7,4 @@ st.title("臺灣金融業統計")
 st.write("Dashboard")
 
 df = pd.read_csv("大盤_2016.csv")
+st.write(df.iloc[0:1])
