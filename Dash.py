@@ -3,7 +3,8 @@
 import streamlit as st
 import pandas as pd
 
-st.title("臺灣金融業統計")
+st.set_page_config("臺灣金融業資訊分析")
+st.title("臺灣金融業資訊分析")
 st.write("Dashboard")
 
 df_2016 = pd.read_csv("大盤_2016.csv")
