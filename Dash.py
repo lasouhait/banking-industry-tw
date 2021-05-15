@@ -22,7 +22,7 @@ df_Bank_2021 = pd.read_csv("金融股_2021.csv")
 
 Company_List = df_Bank_2016[["證券代號","證券名稱"]].append(df_Bank_2017[["證券代號","證券名稱"]]).append(df_Bank_2018[["證券代號","證券名稱"]]).append(df_Bank_2019[["證券代號","證券名稱"]]).append(df_Bank_2020[["證券代號","證券名稱"]]).append(df_Bank_2021[["證券代號","證券名稱"]])
 Company_List = Company_List.sort_values("證券代號")
-Company_List["清單"] = Company_List["證券代號"]+Company_List["證券名稱"]
+Company_List["清單"] = Company_List["證券代號"]+" "+Company_List["證券名稱"]
 List = list(Company_List["清單"].unique())
 
 Company = st.selectbox("選擇證券名稱",List)
