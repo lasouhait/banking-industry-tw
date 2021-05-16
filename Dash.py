@@ -53,7 +53,7 @@ for i in [df_Bank_2016,df_Bank_2017,df_Bank_2018,df_Bank_2019,df_Bank_2020,df_Ba
 
     Stock_PCT = Stock_PCT.append(S[['年','證券代號','證券名稱','收盤價','日期']])
     for j in [df_2016,df_2017,df_2018,df_2019,df_2020,df_2021]:
-      Stock_PCT = Stock_PCT.join(j.set_index('日期')['收盤指數'],on='日期')
+      Stock_PCT = Stock_PCT.join(j.set_index('日期'),on='日期')
   except:
     pass  
 Stock_Annual_Summary = Stock_Annual_Summary.set_index('年')    
