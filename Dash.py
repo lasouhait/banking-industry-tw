@@ -45,6 +45,6 @@ for i in [df_Bank_2016,df_Bank_2017,df_Bank_2018,df_Bank_2019,df_Bank_2020,df_Ba
   first_open = S[S["日期"]==S["日期"].min()]["開盤價"]
   last_close = S[S["日期"]==S["日期"].max()]["收盤價"]
 
-  Stock_Annual_Summary.append({'證券代號': Company_Num, '證券名稱': Company, '最低價': min_price, '最低價日期': min_day, '最高價': max_price, '最高價日期': max_day, '年初開盤價': first_open, '年末收盤價': last_close},ignore_index=True,inplace=True)
+  Stock_Annual_Summary = Stock_Annual_Summary.append({'證券代號': Company_Num, '證券名稱': Company, '最低價': min_price, '最低價日期': min_day, '最高價': max_price, '最高價日期': max_day, '年初開盤價': first_open, '年末收盤價': last_close},ignore_index=True)
 
 st.write(Stock_Annual_Summary)
