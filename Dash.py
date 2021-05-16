@@ -27,9 +27,9 @@ Company_List["清單"] = Company_List["證券代號"]+" "+Company_List["證券�
 List = Company_List["清單"].unique()
 List_Dict = dict(zip(Company_List["清單"],Company_List["證券名稱"]))
 
-read_file()
 Company = st.selectbox("選擇證券名稱",list(List)).map(List_Dict)
 
 st.write(Company+" 歷年年間最高、最低股價")
 
-#Selection = Company_List[Company_List["清單"]==Company]
+S2016 = df_Bank_2016[df_Bank_2016["證券名稱"]==Company && df_Bank_2016["最低價"]==df_Bank_2016["最低價"].min()]
+st.write(S2016)
