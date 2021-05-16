@@ -53,15 +53,15 @@ for i in [df_Bank_2016,df_Bank_2017,df_Bank_2018,df_Bank_2019,df_Bank_2020,df_Ba
 
     Stock_PCT = Stock_PCT.append(S[['年','證券代號','證券名稱','收盤價','日期']])
     for j in [df_2016,df_2017,df_2018,df_2019,df_2020,df_2021]:
-      j = j[j["指數"]=="發行量股價加權指數"]
+      j = j[j["指數"]=="發行量加權股價指數"]
       Stock_PCT = Stock_PCT.join(j.set_index('日期')["收盤指數"],on='日期')
   except:
     pass  
 Stock_Annual_Summary = Stock_Annual_Summary.set_index('年')
 Stock_PCT['收盤價'] = Stock_PCT['收盤價'].astype(float)
-#Stock_PCT['收盤指數'] = Stock_PCT['收盤指數'].astype(float)
+Stock_PCT['收盤指數'] = Stock_PCT['收盤指數'].astype(float)
 Stock_PCT["漲跌幅"] = Stock_PCT['收盤價'].pct_change()
-#Stock_PCT["大盤波動幅"] = Stock_PCT['收盤指數'].pct_change()
+Stock_PCT["大盤波動幅"] = Stock_PCT['收盤指數'].pct_change()
 st.write(Stock_Annual_Summary)
 
 st.write(Company+" 股價波動分析")
