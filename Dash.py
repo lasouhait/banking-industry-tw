@@ -2,6 +2,7 @@
 
 import streamlit as st
 import pandas as pd
+import statsmodels.api as sm
 
 st.set_page_config(page_title="臺灣金融業資訊分析")
 st.title("臺灣金融業資訊分析")
@@ -32,6 +33,7 @@ Company = Selection_Name_Dict[st.selectbox("選擇證券名稱",list(Selection_L
 
 st.write(Company+" 歷年年間最高、最低股價")
 Stock_Annual_Summary = pd.DataFrame(columns=['年','證券代號','證券名稱','最低價','最低價日期','最高價','最高價日期','年初開盤價','年末收盤價'])
+Stock_PCT = pd.DataFrame(columns=['年','證券代號','證券名稱','收盤價','日期'])
 
 for i in [df_Bank_2016,df_Bank_2017,df_Bank_2018,df_Bank_2019,df_Bank_2020,df_Bank_2021]:
   try:
@@ -46,8 +48,11 @@ for i in [df_Bank_2016,df_Bank_2017,df_Bank_2018,df_Bank_2019,df_Bank_2020,df_Ba
     max_day = max_record['日期'].iloc[0]
     first_open = S[S["日期"]==S["日期"].min()]["開盤價"].iloc[0]
     last_close = S[S["日期"]==S["日期"].max()]["收盤價"].iloc[0]
-
+    
     Stock_Annual_Summary = Stock_Annual_Summary.append({'年':Year, '證券代號': Company_Num, '證券名稱': Company, '最低價': min_price, '最低價日期': min_day, '最高價': max_price, '最高價日期': max_day, '年初開盤價': first_open, '年末收盤價': last_close},ignore_index=True)
+
+    Stock_PCT = Stock_PCT.append(S[['年','證券代號','證券名稱','收盤價','日期']])
+    
   except:
     pass  
 Stock_Annual_Summary = Stock_Annual_Summary.set_index('年')    
