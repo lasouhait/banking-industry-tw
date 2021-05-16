@@ -59,9 +59,9 @@ for i in [df_Bank_2016,df_Bank_2017,df_Bank_2018,df_Bank_2019,df_Bank_2020,df_Ba
     pass  
 Stock_Annual_Summary = Stock_Annual_Summary.set_index('年')
 Stock_PCT['收盤價'] = Stock_PCT['收盤價'].astype(float)
-Stock_PCT['收盤指數'] = Stock_PCT['收盤指數'].replace('\"').replace("\'").replace(",").astype(float)
+#Stock_PCT['收盤指數'] = Stock_PCT['收盤指數'].replace('\"').replace("\'").replace(",").astype(float)
 Stock_PCT["漲跌幅"] = Stock_PCT['收盤價'].pct_change()
-Stock_PCT["大盤波動幅"] = Stock_PCT['收盤指數'].pct_change()
+#Stock_PCT["大盤波動幅"] = Stock_PCT['收盤指數'].pct_change()
 st.write(Stock_Annual_Summary)
 
 st.write(Company+" 股價波動分析")
