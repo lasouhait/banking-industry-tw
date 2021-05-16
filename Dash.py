@@ -44,6 +44,6 @@ max_day = max_record['日期']
 first_open = S2016[S2016["日期"]==S2016["日期"].min()]["開盤價"]
 last_close = S2016[S2016["日期"]==S2016["日期"].max()]["收盤價"]
 
-Stock_Annual_Summary.append({'證券代號': Company_Num, '證券名稱': Company, '最低價': min_price, '最低價日期': min_day, '最高價': max_price, '最高價日期': max_day, '年初開盤價': first_open, '年末收盤價': last_close})
+Stock_Annual_Summary.append({'證券代號': Company_Num, '證券名稱': Company, '最低價': min_price, '最低價日期': min_day, '最高價': max_price, '最高價日期': max_day, '年初開盤價': first_open, '年末收盤價': last_close},ignore_index=True)
 
 st.write(Stock_Annual_Summary)
