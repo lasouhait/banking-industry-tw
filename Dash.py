@@ -27,7 +27,7 @@ Company_List["清單"] = Company_List["證券代號"]+" "+Company_List["證券�
 List = Company_List["清單"].unique()
 List_Dict = dict(zip(Company_List["清單"],Company_List["證券名稱"]))
 
-Company = st.selectbox("選擇證券名稱",list(List)).map(List_Dict)
+Company = List_Dict[st.selectbox("選擇證券名稱",list(List))]
 
 st.write(Company+" 歷年年間最高、最低股價")
 
