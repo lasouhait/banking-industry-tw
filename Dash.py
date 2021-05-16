@@ -7,6 +7,7 @@ st.set_page_config(page_title="臺灣金融業資訊分析")
 st.title("臺灣金融業資訊分析")
 st.write("Dashboard")
 
+@st.cache
 def read_file():
   df_2016 = pd.read_csv("大盤_2016.csv")
   df_2017 = pd.read_csv("大盤_2017.csv")
@@ -27,8 +28,8 @@ def read_file():
   Company_List["清單"] = Company_List["證券代號"]+" "+Company_List["證券名稱"]
   List = Company_List["清單"].unique()
   List_Dict = dict(zip(Company_List["清單"],Company_List["證券代號"]))
-  
-@st.cache
+
+
 read_file()
 Company = st.selectbox("選擇證券名稱",list(List)).map(List_Dict)
 
