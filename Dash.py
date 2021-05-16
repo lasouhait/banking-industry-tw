@@ -34,17 +34,20 @@ st.write(Company+" 歷年年間最高、最低股價")
 Stock_Annual_Summary = pd.DataFrame(columns=['證券代號','證券名稱','最低價','最低價日期','最高價','最高價日期','年初開盤價','年末收盤價'])
 
 for i in [df_Bank_2016,df_Bank_2017,df_Bank_2018,df_Bank_2019,df_Bank_2020,df_Bank_2021]:
-  S = i[i["證券名稱"]==Company]
-  Company_Num = S['證券代號'].unique()[0]
-  min_record = S[S["最低價"]==S["最低價"].min()]
-  min_price = min_record['最低價'].iloc[0]
-  min_day = min_record['日期'].iloc[0]
-  max_record = S[S["最低價"]==S["最低價"].max()]
-  max_price = max_record['最低價'].iloc[0]
-  max_day = max_record['日期'].iloc[0]
-  first_open = S[S["日期"]==S["日期"].min()]["開盤價"].iloc[0]
-  last_close = S[S["日期"]==S["日期"].max()]["收盤價"].iloc[0]
+  try:
+    S = i[i["證券名稱"]==Company]
+    Company_Num = S['證券代號'].unique()[0]
+    min_record = S[S["最低價"]==S["最低價"].min()]
+    min_price = min_record['最低價'].iloc[0]
+    mi n_day = min_record['日期'].iloc[0]
+    max_record = S[S["最低價"]==S["最低價"].max()]
+    max_price = max_record['最低價'].iloc[0]
+    max_day = max_record['日期'].iloc[0]
+    first_open = S[S["日期"]==S["日期"].min()]["開盤價"].iloc[0]
+    last_close = S[S["日期"]==S["日期"].max()]["收盤價"].iloc[0]
 
-  Stock_Annual_Summary = Stock_Annual_Summary.append({'證券代號': Company_Num, '證券名稱': Company, '最低價': min_price, '最低價日期': min_day, '最高價': max_price, '最高價日期': max_day, '年初開盤價': first_open, '年末收盤價': last_close},ignore_index=True)
-
+    Stock_Annual_Summary = Stock_Annual_Summary.append({'證券代號': Company_Num, '證券名稱': Company, '最低價': min_price, '最低價日期': min_day, '最高價': max_price, '最高價日期': max_day, '年初開盤價': first_open, '年末收盤價': last_close},ignore_index=True)
+  except:
+    pass  
+    
 st.write(Stock_Annual_Summary)
