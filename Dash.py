@@ -32,5 +32,5 @@ Company = List_Dict[st.selectbox("選擇證券名稱",list(List))]
 st.write(Company+" 歷年年間最高、最低股價")
 
 S2016 = df_Bank_2016[df_Bank_2016["證券名稱"]==Company]
-S2016 = df_Bank_2016[df_Bank_2016["最低價"]==df_Bank_2016["最低價"].min()]
+S2016 = S2016[S2016["最低價"]==S2016["最低價"].min()]
 st.write(S2016)
