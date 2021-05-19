@@ -22,7 +22,7 @@ df_Bank_2019 = pd.read_csv("金融股_2019.csv")
 df_Bank_2020 = pd.read_csv("金融股_2020.csv")
 df_Bank_2021 = pd.read_csv("金融股_2021.csv")
 
-index = pd.DataFrame(columns=['指數','收盤指數','日期']
+index = pd.DataFrame(columns=['指數','收盤指數','日期'])
 
 
 for j in [df_2016,df_2017,df_2018,df_2019,df_2020,df_2021]:
