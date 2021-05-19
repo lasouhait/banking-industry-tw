@@ -80,6 +80,7 @@ for i in [2016,2017,2018,2019,2020,2021]:
     model = sm.OLS(S["漲跌幅"],sm.add_constant(S["大盤波動幅"]))
     results = model.fit()
     beta = results.params
-    beta_table.append({'年':i, 'beta 值': beta[1]})
-    
+    beta_table = beta_table.append({'年':i, 'beta 值': beta[1]},ignore_index=True)
+
+beta_table.set_index("年")
 st.write(beta_table)
