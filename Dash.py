@@ -72,7 +72,7 @@ st.write(Stock_Annual_Summary)
 st.write(Company+" 股價波動分析")
 st.write(Stock_PCT)
 
-for i in [2016:2022]:
+for i in [2016,2017,2018,2019,2020,2021]:
     S = Stock_PCT[Stock_PCT["年"]==i]
     model = sm.OLS(S["大盤波動幅"],sm.add_constant(S["漲跌幅"]))
     results = model.fit()
