@@ -38,7 +38,7 @@ Selection_Name_Dict = dict(zip(Company_List["清單"],Company_List["證券名稱
 
 Company = Selection_Name_Dict[st.selectbox("選擇證券名稱",list(Selection_List))]
 
-
+st.write(index)
 st.write(Company+" 歷年年間最高、最低股價")
 Stock_Annual_Summary = pd.DataFrame(columns=['年','證券代號','證券名稱','最低價','最低價日期','最高價','最高價日期','年初開盤價','年末收盤價'])
 Stock_PCT = pd.DataFrame(columns=['年','證券代號','證券名稱','收盤價','日期'])
