@@ -27,9 +27,9 @@ index = pd.DataFrame(columns=['收盤指數','日期'])
 
 for j in [df_2016,df_2017,df_2018,df_2019,df_2020,df_2021]:
     j = j[j["指數"]=="發行量加權股價指數"][['收盤指數','日期']]
+    j['收盤指數'] = j['收盤指數'].astype(float)
     index = index.append(j,ignore_index=True)
     st.write(index)
-
 
 Company_List = df_Bank_2016[["證券代號","證券名稱"]].append(df_Bank_2017[["證券代號","證券名稱"]]).append(df_Bank_2018[["證券代號","證券名稱"]]).append(df_Bank_2019[["證券代號","證券名稱"]]).append(df_Bank_2020[["證券代號","證券名稱"]]).append(df_Bank_2021[["證券代號","證券名稱"]])
 Company_List = Company_List.sort_values("證券代號")
