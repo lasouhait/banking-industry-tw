@@ -26,7 +26,7 @@ index = pd.DataFrame(columns=['指數','收盤指數','日期'])
 
 
 for j in [df_2016,df_2017,df_2018,df_2019,df_2020,df_2021]:
-    j = j[j["指數"]=="發行量加權股價指數"]
+    j = j[j["指數"]=="發行量加權股價指數"][['指數','收盤指數','日期']]
     index = index.append(j,ignore_index=True)                     
 
 
@@ -68,7 +68,7 @@ Stock_Annual_Summary = Stock_Annual_Summary.set_index('年')
 Stock_PCT['收盤價'] = Stock_PCT['收盤價'].astype(float)
 Stock_PCT['收盤指數'] = Stock_PCT['收盤指數'].str.replace(",","").astype(float)
 Stock_PCT["漲跌幅"] = Stock_PCT['收盤價'].pct_change()
-#Stock_PCT["大盤波動幅"] = Stock_PCT['收盤指數'].pct_change()
+Stock_PCT["大盤波動幅"] = Stock_PCT['收盤指數'].pct_change()
 st.write(Stock_Annual_Summary)
 
 st.write(Company+" 股價波動分析")
