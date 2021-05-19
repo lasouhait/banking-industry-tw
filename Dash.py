@@ -27,6 +27,7 @@ index = pd.DataFrame(columns=['收盤指數','日期'])
 
 for j in [df_2016,df_2017,df_2018,df_2019,df_2020,df_2021]:
     j = j[j["指數"]=="發行量加權股價指數"][['收盤指數','日期']]
+    st.write(j)
     index = index.append(j,ignore_index=True)                     
 
 
@@ -38,7 +39,6 @@ Selection_Name_Dict = dict(zip(Company_List["清單"],Company_List["證券名稱
 
 Company = Selection_Name_Dict[st.selectbox("選擇證券名稱",list(Selection_List))]
 
-st.write(index)
 st.write(Company+" 歷年年間最高、最低股價")
 Stock_Annual_Summary = pd.DataFrame(columns=['年','證券代號','證券名稱','最低價','最低價日期','最高價','最高價日期','年初開盤價','年末收盤價'])
 Stock_PCT = pd.DataFrame(columns=['年','證券代號','證券名稱','收盤價','日期'])
@@ -61,14 +61,11 @@ for i in [df_Bank_2016,df_Bank_2017,df_Bank_2018,df_Bank_2019,df_Bank_2020,df_Ba
 
     Stock_PCT = Stock_PCT.append(S[['年','證券代號','證券名稱','收盤價','日期']])
     Stock_PCT = Stock_PCT.join(index.set_index('日期'),on='日期')
-                     
   except:
     pass  
 Stock_Annual_Summary = Stock_Annual_Summary.set_index('年')
 Stock_PCT['收盤價'] = Stock_PCT['收盤價'].astype(float)
-st.write(Stock_PCT)
 Stock_PCT['收盤指數'] = Stock_PCT['收盤指數'].str.replace(",","").astype(float)
-st.write(Stock_PCT)
 Stock_PCT["漲跌幅"] = Stock_PCT['收盤價'].pct_change()
 Stock_PCT["大盤波動幅"] = Stock_PCT['收盤指數'].pct_change()
 st.write(Stock_Annual_Summary)
