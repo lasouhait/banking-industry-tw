@@ -29,7 +29,7 @@ for j in [df_2016,df_2017,df_2018,df_2019,df_2020,df_2021]:
     j['收盤指數'] = j['收盤指數'].str.replace(",","").str.replace("\"","").astype(float)
     index = index.append(j,ignore_index=True)
 
-index = index.set_index["日期"]
+index = index.set_index("日期")
    
 Company_List = df_Bank_2016[["證券代號","證券名稱"]].append(df_Bank_2017[["證券代號","證券名稱"]]).append(df_Bank_2018[["證券代號","證券名稱"]]).append(df_Bank_2019[["證券代號","證券名稱"]]).append(df_Bank_2020[["證券代號","證券名稱"]]).append(df_Bank_2021[["證券代號","證券名稱"]])
 Company_List = Company_List.sort_values("證券代號")
