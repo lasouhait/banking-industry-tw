@@ -73,11 +73,13 @@ Stock_PCT = Stock_PCT[1:]
 st.write(Stock_Annual_Summary)
 
 st.write(Company+" 股價波動分析")
-st.write(Stock_PCT)
+beta_table = pd.DataFrame(columns=['年','beta 值'])
 
 for i in [2016,2017,2018,2019,2020,2021]:
     S = Stock_PCT[Stock_PCT["年"]==i]
-    model = sm.OLS(S["大盤波動幅"],sm.add_constant(S["漲跌幅"]))
+    model = sm.OLS(S["漲跌幅"],sm.add_constant(S["大盤波動幅"]))
     results = model.fit()
     beta = results.params
-    st.write(beta,i)
+    beta_table.append({'年':i, 'beta 值': beta[1]})
+    
+st.write(beta_table)
