@@ -22,7 +22,7 @@ df_Bank_2019 = pd.read_csv("金融股_2019.csv")
 df_Bank_2020 = pd.read_csv("金融股_2020.csv")
 df_Bank_2021 = pd.read_csv("金融股_2021.csv")
 
-index = pd.DataFrame(columns=['指數','收盤指數','日期'])
+index = pd.DataFrame(columns=['收盤指數','日期'])
 
 
 for j in [df_2016,df_2017,df_2018,df_2019,df_2020,df_2021]:
@@ -66,7 +66,9 @@ for i in [df_Bank_2016,df_Bank_2017,df_Bank_2018,df_Bank_2019,df_Bank_2020,df_Ba
     pass  
 Stock_Annual_Summary = Stock_Annual_Summary.set_index('年')
 Stock_PCT['收盤價'] = Stock_PCT['收盤價'].astype(float)
+st.write(Stock_PCT)
 Stock_PCT['收盤指數'] = Stock_PCT['收盤指數'].str.replace(",","").astype(float)
+st.write(Stock_PCT)
 Stock_PCT["漲跌幅"] = Stock_PCT['收盤價'].pct_change()
 Stock_PCT["大盤波動幅"] = Stock_PCT['收盤指數'].pct_change()
 st.write(Stock_Annual_Summary)
