@@ -67,7 +67,8 @@ elif page_nav == "股價資訊":
         S = i[i["證券名稱"]==Company]
         Year = S['年'].unique()[0]
         Company_Num = S['證券代號'].unique()[0]
-        min_record = S[S["最低價"]==S["最低價"].min()]
+        min_record = S[S["最低價"]!="--"]
+        min_record = min_record[min_record["最低價"]==min_record["最低價"].min()]
         min_price = min_record['最低價'].iloc[0]
         min_day = min_record['日期'].iloc[0]
         max_record = S[S["最低價"]==S["最低價"].max()]
@@ -109,5 +110,5 @@ elif page_nav == "股價資訊":
         std = S['收盤價'].std()
         beta_table = beta_table.append({'年':i, 'beta 值': beta, '個股標準差': std},ignore_index=True)
 
-    beta_table.set_index("年")
+    beta_table = beta_table.set_index("年")
     st.write(beta_table)
