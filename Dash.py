@@ -87,15 +87,20 @@ Stock_PCT = Stock_PCT[1:]
 st.write(Stock_Annual_Summary)
 
 st.write(Company+" 股價波動分析")
-beta_table = pd.DataFrame(columns=['年','beta 值','標準差'])
+beta_table = pd.DataFrame(columns=['年','beta 值','個股標準差','大盤標準差'])
 
 for i in [2016,2017,2018,2019,2020,2021]:
     S = Stock_PCT[Stock_PCT["年"]==i]
-    model = sm.OLS(S["漲跌幅"],sm.add_constant(S["大盤波動幅"]))
-    results = model.fit()
-    beta = results.params
+    try:
+        model = sm.OLS(S["漲跌幅"],sm.add_constant(S["大盤波動幅"]))
+        results = model.fit()
+        beta = results.params
+        beta = beta[1]
+    except:
+        beta = "無法計算"
     std = S['收盤價'].std()
-    beta_table = beta_table.append({'年':i, 'beta 值': beta[1], '標準差': std},ignore_index=True)
+    std_index = S['收盤指數'].std()
+    beta_table = beta_table.append({'年':i, 'beta 值': beta, '個股標準差': std, '大盤標準差': std_index},ignore_index=True)
 
 beta_table.set_index("年")
 st.write(beta_table)
