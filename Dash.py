@@ -30,6 +30,11 @@ elif page_nav == "股價資訊":
     df_Bank_2019 = read_file("金融股_2019.csv")
     df_Bank_2020 = read_file("金融股_2020.csv")
     df_Bank_2021 = read_file("金融股_2021.csv")
+    df_divprice_2016 = read_file("105除權息.csv")
+    df_divprice_2017 = read_file("106除權息.csv")
+    df_divprice_2018 = read_file("107除權息.csv")
+    df_divprice_2019 = read_file("108除權息.csv")
+    df_divprice_2020 = read_file("109除權息.csv")
 
     @st.cache
     def append_index():
