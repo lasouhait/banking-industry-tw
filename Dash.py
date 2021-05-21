@@ -7,31 +7,39 @@ import statsmodels.api as sm
 st.set_page_config(page_title="臺灣金融業資訊分析")
 st.title("臺灣金融業資訊分析")
 
-df_2015 = pd.read_csv("大盤_2015.csv")
-df_2016 = pd.read_csv("大盤_2016.csv")
-df_2017 = pd.read_csv("大盤_2017.csv")
-df_2018 = pd.read_csv("大盤_2018.csv")
-df_2019 = pd.read_csv("大盤_2019.csv")
-df_2020 = pd.read_csv("大盤_2020.csv")
-df_2021 = pd.read_csv("大盤_2021.csv")
+@st.cache
+def read_file(str):
+    df = pd.read_csv(str)
+    return df
 
-df_Bank_2015 = pd.read_csv("金融股_2015.csv")
-df_Bank_2016 = pd.read_csv("金融股_2016.csv")
-df_Bank_2017 = pd.read_csv("金融股_2017.csv")
-df_Bank_2018 = pd.read_csv("金融股_2018.csv")
-df_Bank_2019 = pd.read_csv("金融股_2019.csv")
-df_Bank_2020 = pd.read_csv("金融股_2020.csv")
-df_Bank_2021 = pd.read_csv("金融股_2021.csv")
+df_2015 = read_file("大盤_2015.csv")
+df_2016 = read_file("大盤_2016.csv")
+df_2017 = read_file("大盤_2017.csv")
+df_2018 = read_file("大盤_2018.csv")
+df_2019 = read_file("大盤_2019.csv")
+df_2020 = read_file("大盤_2020.csv")
+df_2021 = read_file("大盤_2021.csv")
+df_Bank_2015 = read_file("金融股_2015.csv")
+df_Bank_2016 = read_file("金融股_2016.csv")
+df_Bank_2017 = read_file("金融股_2017.csv")
+df_Bank_2018 = read_file("金融股_2018.csv")
+df_Bank_2019 = read_file("金融股_2019.csv")
+df_Bank_2020 = read_file("金融股_2020.csv")
+df_Bank_2021 = read_file("金融股_2021.csv")
 
-index = pd.DataFrame(columns=['收盤指數','日期'])
+@st.cache
+def append_index():
+    index = pd.DataFrame(columns=['收盤指數','日期'])
 
-for j in [df_2015,df_2016,df_2017,df_2018,df_2019,df_2020,df_2021]:
-    j = j[j["指數"]=="發行量加權股價指數"][['收盤指數','日期']]
-    j['收盤指數'] = j['收盤指數'].str.replace(",","").str.replace("\"","").astype(float)
-    index = index.append(j,ignore_index=True)
+    for j in [df_2015,df_2016,df_2017,df_2018,df_2019,df_2020,df_2021]:
+        j = j[j["指數"]=="發行量加權股價指數"][['收盤指數','日期']]
+        j['收盤指數'] = j['收盤指數'].str.replace(",","").str.replace("\"","").astype(float)
+        index = index.append(j,ignore_index=True)
 
-index = index.set_index("日期")
+    index = index.set_index("日期")
+    return index
    
+index = append_index()    
 Company_List = df_Bank_2015[["證券代號","證券名稱"]].append(df_Bank_2016[["證券代號","證券名稱"]]).append(df_Bank_2017[["證券代號","證券名稱"]]).append(df_Bank_2018[["證券代號","證券名稱"]]).append(df_Bank_2019[["證券代號","證券名稱"]]).append(df_Bank_2020[["證券代號","證券名稱"]]).append(df_Bank_2021[["證券代號","證券名稱"]])
 Company_List = Company_List.sort_values("證券代號")
 Company_List["清單"] = Company_List["證券代號"]+" "+Company_List["證券名稱"]
