@@ -84,7 +84,11 @@ elif page_nav == "股價資訊":
 
     Stock_PCT = Stock_PCT.join(index,on='日期')
     Stock_Annual_Summary = Stock_Annual_Summary.set_index('年')
-    Stock_PCT['收盤價'] = Stock_PCT['收盤價'].astype(float)
+    try:
+        Stock_PCT['收盤價'] = Stock_PCT['收盤價'].astype(float)
+    except:
+        Stock_PCT = Stock_PCT[Stock_PCT['收盤價']!="--"]
+        Stock_PCT['收盤價'] = Stock_PCT['收盤價'].astype(float)
     Stock_PCT["漲跌幅"] = Stock_PCT['收盤價'].pct_change()
     Stock_PCT["大盤波動幅"] = Stock_PCT['收盤指數'].pct_change()
     Stock_PCT = Stock_PCT[1:]
