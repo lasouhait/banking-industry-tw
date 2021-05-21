@@ -40,11 +40,17 @@ def append_index():
     return index
    
 index = append_index()    
-Company_List = df_Bank_2015[["證券代號","證券名稱"]].append(df_Bank_2016[["證券代號","證券名稱"]]).append(df_Bank_2017[["證券代號","證券名稱"]]).append(df_Bank_2018[["證券代號","證券名稱"]]).append(df_Bank_2019[["證券代號","證券名稱"]]).append(df_Bank_2020[["證券代號","證券名稱"]]).append(df_Bank_2021[["證券代號","證券名稱"]])
-Company_List = Company_List.sort_values("證券代號")
-Company_List["清單"] = Company_List["證券代號"]+" "+Company_List["證券名稱"]
-Selection_List = Company_List["清單"].unique()
-Selection_Name_Dict = dict(zip(Company_List["清單"],Company_List["證券名稱"]))
+
+@st.cache
+def genetate_list():
+    Company_List = df_Bank_2015[["證券代號","證券名稱"]].append(df_Bank_2016[["證券代號","證券名稱"]]).append(df_Bank_2017[["證券代號","證券名稱"]]).append(df_Bank_2018[["證券代號","證券名稱"]]).append(df_Bank_2019[["證券代號","證券名稱"]]).append(df_Bank_2020[["證券代號","證券名稱"]]).append(df_Bank_2021[["證券代號","證券名稱"]])
+    Company_List = Company_List.sort_values("證券代號")
+    Company_List["清單"] = Company_List["證券代號"]+" "+Company_List["證券名稱"]
+    Selection_List = Company_List["清單"].unique()
+    Selection_Name_Dict = dict(zip(Company_List["清單"],Company_List["證券名稱"]))
+    return Selection_List,Selection_Name_Dict
+
+Selection_List,Selection_Name_Dict = generate_list()
 
 Company = Selection_Name_Dict[st.selectbox("選擇證券名稱",list(Selection_List))]
 
