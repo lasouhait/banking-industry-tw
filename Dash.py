@@ -6,6 +6,7 @@ import statsmodels.api as sm
 
 st.set_page_config(page_title="臺灣金融業資訊分析")
 st.title("臺灣金融業資訊分析")
+st.sidebar.radio("請選取頁面",["營運概況","人力資訊","董監酬勞揭露","股價資訊","金融統計"])
 
 @st.cache
 def read_file(str):
