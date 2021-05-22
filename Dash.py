@@ -40,11 +40,11 @@ elif page_nav == "股價資訊":
         df["股票代號"] = df["股票代號"].str.replace("\"","").str.replace("=","")
         return df
         
-    df_divprice_2016 = pd.read_csv("105除權息.csv",encoding='utf-8')
-    df_divprice_2017 = read_divprice("106除權息.csv")
-    df_divprice_2018 = read_divprice("107除權息.csv")
-    df_divprice_2019 = read_divprice("108除權息.csv")
-    df_divprice_2020 = read_divprice("109除權息.csv")
+    df_divprice_2016 = pd.read_csv("105除權息.csv",encoding='utf-8')[0:-11]
+    df_divprice_2017 = pd.read_csv("106除權息.csv",encoding='utf-8')[0:-11]
+    df_divprice_2018 = pd.read_csv("107除權息.csv",encoding='utf-8')[0:-11]
+    df_divprice_2019 = pd.read_csv("108除權息.csv",encoding='utf-8')[0:-11]
+    df_divprice_2020 = pd.read_csv("109除權息.csv",encoding='utf-8')[0:-11]
 
     @st.cache
     def generate_list():
