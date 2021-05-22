@@ -142,6 +142,6 @@ elif page_nav == "股價資訊":
     div_company = div_company[['年','除權息前收盤價','權值+息值']]
     st.write(div_company)
     beta_table = beta_table.set_index("年")
-    #beta_table = beta_table.join(div_company.set_index("年"))
+    beta_table = beta_table.join(div_company.set_index("年"))
     st.write(beta_table)
         
