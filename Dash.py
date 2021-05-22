@@ -35,8 +35,9 @@ elif page_nav == "股價資訊":
         
     @st.cache
     def read_divprice(str):
-        df = pd.read_csv(str,encoding='mbcs',skiprows=1)#無ansi，以mbcs取代ansi
+        df = pd.read_csv(str,encoding='utf-8')##無ansi，以mbcs取代ansi
         df = df[0:-11]
+        df["股票代號"] = df["股票代號"].str.replace("\"","").str.replace("=","")
         return df
         
     df_divprice_2016 = read_divprice("105除權息.csv")
