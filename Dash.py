@@ -35,7 +35,7 @@ elif page_nav == "股價資訊":
         
     @st.cache
     def read_divprice(str):
-        df = pd.read_csv(str,skiprows=1,encoding='ansi')
+        df = pd.read_csv(str,skiprows=1,encoding='asci')
         df = df[0:-11]
         return df
         
