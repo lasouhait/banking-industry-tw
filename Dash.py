@@ -104,7 +104,7 @@ elif page_nav == "股價資訊":
         
         for i in [df_divprice_2016,df_divprice_2017,df_divprice_2018,df_divprice_2019,df_divprice_2020]:
             i["股票代號"] = i["股票代號"].str.replace("\"","").str.replace("=","")
-            i["年"] = i['資料日期'].str[0:3].astype(int)+1911
+            i["年"] = i['資料日期'].str[0:3].astype(int)
             i = i[['年','股票代號','股票名稱','除權息前收盤價','權值+息值']]
             divprice = divprice.append(i,ignore_index=True)
         
@@ -136,6 +136,7 @@ elif page_nav == "股價資訊":
         except:
             beta = "無法計算"
         std = S['收盤價'].std()
+        i = i.astype(str)
         beta_table = beta_table.append({'年':i, 'beta 值': beta, '個股標準差': std},ignore_index=True)
 
     div_company = divprice[divprice['股票名稱']==Company]
@@ -143,7 +144,7 @@ elif page_nav == "股價資訊":
     st.write(div_company)
     beta_table = beta_table.set_index("年")
     beta_table = beta_table.join(div_company.set_index("年"))
-    #beta_table = beta_table.join(Stock_PCT['年末收盤價'])
+    beta_table = beta_table.join(Stock_Annual_Summary['年末收盤價'])
     #beta_table["年末填權"] = beta_table.apply(lambda row: "有" if row["除權息前收盤價"]<=row['年末收盤價'] else "無")
     st.write(beta_table)
         
