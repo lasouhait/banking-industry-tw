@@ -16,6 +16,8 @@ elif page_nav == "股價資訊":
         df = pd.read_csv(str)
         return df
 
+    ###讀檔
+
     df_2015 = read_file("大盤_2015.csv")
     df_2016 = read_file("大盤_2016.csv")
     df_2017 = read_file("大盤_2017.csv")
@@ -30,25 +32,16 @@ elif page_nav == "股價資訊":
     df_Bank_2019 = read_file("金融股_2019.csv")
     df_Bank_2020 = read_file("金融股_2020.csv")
     df_Bank_2021 = read_file("金融股_2021.csv")
-    df_divprice_2016 = read_file("105除權息.csv")
-    df_divprice_2017 = read_file("106除權息.csv")
-    df_divprice_2018 = read_file("107除權息.csv")
-    df_divprice_2019 = read_file("108除權息.csv")
-    df_divprice_2020 = read_file("109除權息.csv")
-
+        
     @st.cache
-    def append_index():
-        index = pd.DataFrame(columns=['收盤指數','日期'])
-
-        for j in [df_2015,df_2016,df_2017,df_2018,df_2019,df_2020,df_2021]:
-            j = j[j["指數"]=="發行量加權股價指數"][['收盤指數','日期']]
-            j['收盤指數'] = j['收盤指數'].str.replace(",","").str.replace("\"","").astype(float)
-            index = index.append(j,ignore_index=True)
-
-        index = index.set_index("日期")
-        return index
-
-    index = append_index()    
+    def read_divprice(str):
+        df = pd.read_csv(str,skiprows=1)
+        
+    df_divprice_2016 = read_divprice("105除權息.csv")
+    df_divprice_2017 = read_divprice("106除權息.csv")
+    df_divprice_2018 = read_divprice("107除權息.csv")
+    df_divprice_2019 = read_divprice("108除權息.csv")
+    df_divprice_2020 = read_divprice("109除權息.csv")
 
     @st.cache
     def generate_list():
@@ -59,9 +52,12 @@ elif page_nav == "股價資訊":
         Selection_Name_Dict = dict(zip(Company_List["清單"],Company_List["證券名稱"]))
         return Selection_List,Selection_Name_Dict
 
-    Selection_List,Selection_Name_Dict = generate_list()
+    with st.spinner('計算中'):
+        Selection_List,Selection_Name_Dict = generate_list()
 
     Company = Selection_Name_Dict[st.selectbox("選擇證券名稱",list(Selection_List))]
+
+    #歷年股價
 
     st.write(Company+" 歷年年間最高、最低股價")
     Stock_Annual_Summary = pd.DataFrame(columns=['年','證券代號','證券名稱','最低價','最低價日期','最高價','最高價日期','年初開盤價','年末收盤價'])
@@ -87,6 +83,23 @@ elif page_nav == "股價資訊":
         Stock_PCT = Stock_PCT.append(S[['年','證券代號','證券名稱','收盤價','日期']])
       except:
         pass  
+
+    # 股價波動分析
+
+    @st.cache
+    def append_index():
+        index = pd.DataFrame(columns=['收盤指數','日期'])
+
+        for j in [df_2015,df_2016,df_2017,df_2018,df_2019,df_2020,df_2021]:
+            j = j[j["指數"]=="發行量加權股價指數"][['收盤指數','日期']]
+            j['收盤指數'] = j['收盤指數'].str.replace(",","").str.replace("\"","").astype(float)
+            index = index.append(j,ignore_index=True)
+
+        index = index.set_index("日期")
+        return index
+
+    with st.spinner('計算中'):
+        index = append_index()    
 
     Stock_PCT = Stock_PCT.join(index,on='日期')
     Stock_Annual_Summary = Stock_Annual_Summary.set_index('年')
@@ -117,3 +130,6 @@ elif page_nav == "股價資訊":
 
     beta_table = beta_table.set_index("年")
     st.write(beta_table)
+        
+    #股利政策
+    st.write(df_divprice_2016)
