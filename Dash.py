@@ -143,5 +143,7 @@ elif page_nav == "股價資訊":
     st.write(div_company)
     beta_table = beta_table.set_index("年")
     beta_table = beta_table.join(div_company.set_index("年"))
+    beta_table = beta_table.join(Stock_PCT['年末收盤價'])
+    beta_table["年末填權"] = beta_table.apply(lambda row: "有" if row["除權息前收盤價"]<=row['年末收盤價'] else "無")
     st.write(beta_table)
         
