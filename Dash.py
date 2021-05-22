@@ -6,6 +6,7 @@ import statsmodels.api as sm
 
 st.set_page_config(page_title="臺灣金融業資訊分析")
 st.title("臺灣金融業資訊分析")
+st.write("All information is for personal use, and is not aimed to provide suggestion.")
 page_nav = st.sidebar.radio("請選取頁面",["營運概況","人力資訊","董監酬勞揭露","股價資訊","金融統計"])
 
 if page_nav == "營運概況":
@@ -32,13 +33,6 @@ elif page_nav == "股價資訊":
     df_Bank_2019 = read_file("金融股_2019.csv")
     df_Bank_2020 = read_file("金融股_2020.csv")
     df_Bank_2021 = read_file("金融股_2021.csv")
-        
-    @st.cache
-    def read_divprice(str):
-        df = pd.read_csv(str,encoding='utf-8')##無ansi，以mbcs取代ansi
-        df = df[0:-11]
-        df["股票代號"] = df["股票代號"].str.replace("\"","").str.replace("=","")
-        return df
         
     df_divprice_2016 = pd.read_csv("105除權息.csv",encoding='utf-8')[0:-11]
     df_divprice_2017 = pd.read_csv("106除權息.csv",encoding='utf-8')[0:-11]
@@ -103,7 +97,20 @@ elif page_nav == "股價資訊":
 
     with st.spinner('計算中'):
         index = append_index()    
-
+        
+    @st.cache
+    def append_divprice():
+        divprice = pd.DataFrame(columns=['年','股票代號','股票名稱','除權息前收盤價','權值+息值'])
+        
+        for i in [df_div_price_2016,df_divprice_2017,df_divprice_2018,df_divprice_2019,df_divprice_2020]:
+            i["股票代號"] = i["股票代號"].str.replace("\"","").str.replace("=","")
+            i["年"] = i['資料日期'].str[0:3]
+            i = i[['年','股票代號','股票名稱','除權息前收盤價','權值+息值']]
+            divprice = divprice.append(i,ignore_index=True)
+        
+        return divprice
+        
+    divprice = append_divprice()
     Stock_PCT = Stock_PCT.join(index,on='日期')
     Stock_Annual_Summary = Stock_Annual_Summary.set_index('年')
     try:
@@ -131,8 +138,9 @@ elif page_nav == "股價資訊":
         std = S['收盤價'].std()
         beta_table = beta_table.append({'年':i, 'beta 值': beta, '個股標準差': std},ignore_index=True)
 
+    div_company = divprice[divprice['股票名稱']==Company]
+    div_company = div_company[['年','除權息前收盤價','權值+息值']]
     beta_table = beta_table.set_index("年")
+    beta_table,join = beta_table.join(div_company.set_index("年")
     st.write(beta_table)
         
-    #股利政策
-    st.write(df_divprice_2016)
