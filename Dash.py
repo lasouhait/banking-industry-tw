@@ -105,6 +105,7 @@ elif page_nav == "股價資訊":
         for i in [df_divprice_2016,df_divprice_2017,df_divprice_2018,df_divprice_2019,df_divprice_2020]:
             i["股票代號"] = i["股票代號"].str.replace("\"","").str.replace("=","")
             i["年"] = i['資料日期'].str[0:3].astype(int)+1911
+            i["年"] = i["年"].astype(str)
             i = i[['年','股票代號','股票名稱','除權息前收盤價','權值+息值']]
             divprice = divprice.append(i,ignore_index=True)
             
