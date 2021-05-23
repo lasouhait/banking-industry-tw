@@ -141,7 +141,7 @@ elif page_nav == "股價資訊":
         beta_table = beta_table.append({'年':i, 'beta 值': beta, '個股標準差': std},ignore_index=True)
 
     div_company = divprice[divprice['股票名稱']==Company]
-    div_company = div_company[['年','除權息前收盤價','權值+息值']]
+    div_company = div_company[['除權息前收盤價','權值+息值']]
     st.write(div_company)
     beta_table = beta_table.set_index("年")
     beta_table = beta_table.join(div_company)
