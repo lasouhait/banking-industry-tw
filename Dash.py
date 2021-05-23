@@ -136,7 +136,7 @@ elif page_nav == "股價資訊":
         except:
             beta = "無法計算"
         std = S['收盤價'].std()
-        i = i.astype(str)
+        i = str(i)
         beta_table = beta_table.append({'年':i, 'beta 值': beta, '個股標準差': std},ignore_index=True)
 
     div_company = divprice[divprice['股票名稱']==Company]
