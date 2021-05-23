@@ -114,6 +114,7 @@ elif page_nav == "股價資訊":
         
     divprice = append_divprice()
     Stock_PCT = Stock_PCT.join(index,on='日期')
+    Stock_Annual_Summary['年'] = Stock_Annual_Summary['年'].astype(str)
     Stock_Annual_Summary = Stock_Annual_Summary.set_index('年')
     try:
         Stock_PCT['收盤價'] = Stock_PCT['收盤價'].astype(float)
